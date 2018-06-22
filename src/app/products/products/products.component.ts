@@ -1,16 +1,16 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { ProductsService } from './../_services/products.service';
-import { NgForm } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Product } from '../models/product';
+import { Product } from '../../models/product';
+import { ProductsService } from '../../_services/products.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, OnDestroy {
   productServiceSubscription: Subscription;
   products: Product[] = [];
   searchTried: boolean = false;
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   searchSubmit(f: NgForm) {
     this.searchTried = true;
     console.log(f.value);
-    this.router.navigate([''], { queryParams: { search: f.value.searchText } }).then(_ => this.search());
+    this.router.navigate(['products'], { queryParams: { search: f.value.searchText } }).then(_ => this.search());
   }
 
 
@@ -65,3 +65,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 }
+

@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       if(localStorage.getItem('currentUser')){
-        console.log('currentUser', localStorage.getItem('currentUser'));
+        //console.log('currentUser', localStorage.getItem('currentUser'));
         return true;
       }
 console.log('it is redirecting from here');

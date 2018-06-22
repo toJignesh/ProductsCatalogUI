@@ -1,7 +1,7 @@
 import { AuthGuard } from './_guards/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import{FormsModule} from '@angular/forms';
+import{FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -12,11 +12,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
+import { AcSearchComponent } from './ac-search/ac-search.component';
+import { ClickOutsideDirective } from './_directives/click-outside.directive';
+import { ProductsComponent } from './products/products/products.component';
 
 const routes: Routes=[
-  {path:'',component:HomeComponent, canActivate:[AuthGuard], pathMatch:'full'},
+  {path:'', redirectTo: 'products', canActivate:[AuthGuard], pathMatch:'full'},
   {path:'home',component:HomeComponent, canActivate:[AuthGuard]},
   {path:'login', component:LoginComponent},
+  {path:'products',component:ProductsComponent, canActivate:[AuthGuard], children:[
+    {path:':id', component:ProductDetailComponent},
+  ]},
   {path:'**', redirectTo:''}
 ];
 
@@ -28,12 +34,16 @@ const routes: Routes=[
     FooterComponent,
     LoginComponent,
     HomeComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    AcSearchComponent,
+    ClickOutsideDirective,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [

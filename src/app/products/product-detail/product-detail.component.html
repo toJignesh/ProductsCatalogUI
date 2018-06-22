@@ -1,3 +1,20 @@
-<p>
-  product-detail works!
-</p>
+<div class="container">
+  <h3>Product Details</h3>
+  <div *ngIf='this.product'>
+    <b>Id:</b> {{product.productId}}
+    <br>
+    <b>Name:</b> {{product.name}}
+    <br>
+    <b>Description:</b> {{product.briefDescription}}
+    <br>
+    <b>Price:</b> {{product.price}}
+    <br>
+    <b>Quantity:</b> {{product.quantity}}
+    <br>
+                
+  </div>
+  <div *ngIf='!this.product'>
+    No product found
+  </div>
+
+</div>

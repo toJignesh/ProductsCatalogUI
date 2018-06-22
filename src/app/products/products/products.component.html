@@ -1,0 +1,70 @@
+<div class='well'>
+    <div class="container">
+      <form #searchForm="ngForm" (ngSubmit)='searchSubmit(searchForm)'>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="search text" ngModel name="searchText" id='seachText' #searchText="ngModel"
+                required (keypress.enter)='searchSubmit(searchForm)'>
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-success" [disabled]='searchForm.invalid'>Search</button>
+            </div>
+  
+            <div class="float-right">
+              <button class="btn" (click)='testProductsService()'>Get All</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8">
+  
+        <div *ngIf='(products.length == 0 && searchTried)'>
+          No products found.
+        </div>
+        <div *ngIf='products.length > 0'>
+          <table class='table table-striped'>
+            <tbody>
+              <tr *ngFor='let product of products' (click)='itemSelected(product.id)'>
+                <td>
+                  {{product.name}}
+                  <br>
+                  {{product.briefDescription}}
+                </td>
+              </tr>
+            </tbody>
+            <!-- <thead>
+              <tr>
+                <th class="scope">Id</th>
+                <th class="scope">Name</th>
+                <th class="scope">Description</th>
+                <th class="scope">Price</th>
+                <th class="scope">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let product of products' (click)='itemSelected(product.id)'>
+                <th>{{product.id}}</th>
+                <th>{{product.name}}</th>
+                <th>{{product.briefDescription}}</th>
+                <th>{{product.price}}</th>
+                <th>{{product.quantity}}</th>
+              </tr>
+            </tbody> -->
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  <div>
+  
+  </div>
+  
+  <app-ac-search></app-ac-search>

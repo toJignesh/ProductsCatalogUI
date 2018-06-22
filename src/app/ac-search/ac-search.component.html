@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <form [formGroup]='searchForm'>
+      <input value="my value" formControlName='search' name='search' class='form-control input-underline search-bar' type="text">
+    </form>
+    </div>
+    <div clickOutside  (clickOutside)="toggleDropdown()" *ngIf='showDropDown'>
+      <div class='col-sm-1 dropdown-menu product-drop-down'>
+        <div *ngFor='let v of values' class='each-item' (click)='itemSelected(v)'>
+          {{v.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <header class='flex-container flex-center'>
+  <div class='width-25'></div>
+  <div class="width-half">
+      <label for="search">
+          <i class='fa fa-search icon-pos color-purple'></i>
+      </label>
+          <input id='search' placeholder="Search for a state"  (click)=' openDropDown() ' class=' input-underline search-bar ' type='text'>
+      <div clickOutside (clickOutside)="closeDropDown()">
+          <div *ngIf='showDropDown' class='search-drop-down '>
+          </div>
+      </div>
+  </div>
+  <div class='width-25 '></div>
+</header>
+<main>
+  <div class='flex-container card-container flex-wrap flex-center '>
+      <div class='flex-container card-dimensions card flex-center width-100 ' *ngFor='let v of values'>
+          <div class='width-5 '></div>
+          {{s}}
+          <div class='width-5 '></div>
+      </div>
+  </div>
+</main>
+<footer>
+</footer> -->

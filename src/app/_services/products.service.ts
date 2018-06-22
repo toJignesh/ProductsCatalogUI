@@ -27,6 +27,11 @@ export class ProductsService {
       );
   }
 
+  getById(id: number):Observable<any>{
+    return this.http.get<Product>(`/api/products/${id}`);
+  }
+
+  
   find(q: string):Observable<any>{
     return this.http.get<Product[]>(`/api/products/find?q=${q}`)
       .pipe(
@@ -42,4 +47,21 @@ export class ProductsService {
         catchError(err=> throwError(err))
       );
   }
+
+  startsWith(name: string):Observable<any>{
+    return this.http.get<Product[]>(`/api/products/namestartswith?name=${name}`)
+      .pipe(
+        map(data=>{
+          return data.map( d=>({
+            id: d.productId,
+            name: d.name,
+            briefDescription: d.briefDescription,
+            price: d.price,
+            quantity: d.quantity
+          }))
+        }),
+        catchError(err=> throwError(err))
+      );
+  }
+
 }
