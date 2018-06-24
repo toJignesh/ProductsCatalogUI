@@ -1,5 +1,5 @@
 import { Product } from './../models/product';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, filter, catchError } from 'rxjs/operators';
@@ -12,6 +12,7 @@ export class ProductsService {
   constructor(private http: HttpClient) { }
 
   getAll():Observable<any>{
+  
     return this.http.get<Product[]>('/api/products')
       .pipe(
         map(data=>{
@@ -49,6 +50,7 @@ export class ProductsService {
   }
 
   startsWith(name: string):Observable<any>{
+   
     return this.http.get<Product[]>(`/api/products/namestartswith?name=${name}`)
       .pipe(
         map(data=>{

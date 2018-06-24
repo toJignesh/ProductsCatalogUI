@@ -1,8 +1,14 @@
-<div class="container">
+<div class="container" style='padding-bottom: 11px;'>
   <div class="row">
     <div class="col-sm-4">
       <form [formGroup]='searchForm'>
-      <input value="my value" formControlName='search' name='search' class='form-control input-underline search-bar' type="text">
+      <input value="my value" 
+      formControlName='search' 
+      name='search' 
+      class='form-control input-underline search-bar' 
+      type="text"
+      #search
+      (keyup.enter)='enterPressed(searchForm)'>
     </form>
     </div>
     <div clickOutside  (clickOutside)="toggleDropdown()" *ngIf='showDropDown'>

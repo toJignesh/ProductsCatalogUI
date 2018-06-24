@@ -14,8 +14,10 @@ export class AuthGuard implements CanActivate {
         //console.log('currentUser', localStorage.getItem('currentUser'));
         return true;
       }
-console.log('it is redirecting from here');
-      this.router.navigate(['login'],{queryParams:{returnUrl:state.url}});
-      return false;
+
+      return true;
+// console.log('it is redirecting from here');
+//       this.router.navigate(['login'],{queryParams:{returnUrl:state.url}});
+//       return false;
   }
 }

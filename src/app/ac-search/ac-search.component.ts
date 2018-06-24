@@ -1,11 +1,12 @@
 import { ProductsService } from './../_services/products.service';
 
-import { Component, OnInit, Directive, AfterViewInit, ViewChild, ElementRef, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, Directive, AfterViewInit, ViewChild, ElementRef, OnChanges, OnDestroy, Output } from '@angular/core';
 import {FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, switchMap, distinctUntilChanged, filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { Product } from '../models/product';
 import { Router } from '@angular/router';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-ac-search',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./ac-search.component.css']
 })
 export class AcSearchComponent implements OnInit, OnDestroy {
+@Output() searchPerformed : EventEmitter<string>=new EventEmitter<string>();
 
   showDropDown: boolean = false;
   values: string[] = [];
@@ -58,5 +60,11 @@ export class AcSearchComponent implements OnInit, OnDestroy {
     console.log('id of the item selected', product.id);
     this.router.navigate(['products', product.id]);
     this.showDropDown=false;
+  }
+
+  enterPressed(ctrl: FormGroup):void{
+    const newValue = ctrl.get('search').value;
+    this.searchPerformed.emit(newValue);
+    this.showDropDown = false;
   }
 }

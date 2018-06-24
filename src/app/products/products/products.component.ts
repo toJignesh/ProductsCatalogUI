@@ -64,5 +64,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this.productServiceSubscription.unsubscribe();
     }
   }
+
+  someoneHitEnter(value: string):void{
+    console.log('value has reached the parent component', value);
+    
+    this.router.navigate(['products'], { queryParams: { search: value } }).then(_ => this.search());
+  }
 }
 
