@@ -1,0 +1,60 @@
+<div>
+  <form #searchForm="ngForm" (ngSubmit)="searchAdvanced(searchForm)">
+    <div class='form-group'>
+      <label for="id">id</label>
+      <br>
+      <input type="text" 
+        name='id'
+        id='id'
+        #id="ngModel"
+        ngModel
+        >
+    </div>
+    <div class="form-group">
+      <label for="name">name</label>
+      <br>
+      <input type="text"
+        ngModel
+        #name='ngModel'
+        name='name'
+        id='name'
+        >
+    </div>
+    <div class="form-group">
+      <label for="description">description</label>
+      <br>
+      <input type="text"
+        ngModel
+        #description='ngModel'
+        name='description'
+        style='width: 400px;'
+        formControlname='description'
+        id='description'>
+    </div>
+    <div class="form-group">
+      <label for="price">price</label>
+      <br>
+      <input type="text"
+        ngModel
+        #price='ngModel'
+        name='price'
+        formControlname='price'
+        id='price'>
+    </div>
+    <div class="form-group">
+      <label for="quantity">quantity</label>
+      <br>
+      <input type="text"
+        ngModel
+        #quantity='ngModel'
+        name='quantity'
+        formControlname='quantity'
+        id='quantity'>
+    </div>
+    <button class="btn btn-primary">search</button>
+  </form>
+
+  <div *ngIf='!isValidForm'>
+    <div class="alert alert-warning">one field must have value</div>
+  </div>
+</div>

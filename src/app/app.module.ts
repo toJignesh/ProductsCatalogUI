@@ -15,6 +15,7 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import { AcSearchComponent } from './ac-search/ac-search.component';
 import { ClickOutsideDirective } from './_directives/click-outside.directive';
 import { ProductsComponent } from './products/products/products.component';
+import { ProductsAdvancedSearchComponent } from './products/products-advanced-search/products-advanced-search.component';
 
 const routes: Routes=[
   {path:'', redirectTo: 'products', canActivate:[AuthGuard], pathMatch:'full'},
@@ -23,6 +24,7 @@ const routes: Routes=[
   {path:'products',component:ProductsComponent, canActivate:[AuthGuard], children:[
     {path:':id', component:ProductDetailComponent},
   ]},
+  {path:'prod-adv-search',component:ProductsAdvancedSearchComponent, canActivate:[AuthGuard]},
   {path:'**', redirectTo:''}
 ];
 
@@ -37,7 +39,8 @@ const routes: Routes=[
     ProductDetailComponent,
     AcSearchComponent,
     ClickOutsideDirective,
-    ProductsComponent
+    ProductsComponent,
+    ProductsAdvancedSearchComponent
   ],
   imports: [
     BrowserModule,
