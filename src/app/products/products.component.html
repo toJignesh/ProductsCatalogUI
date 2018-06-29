@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col col-sm-2">
+    <a (click)='showAdvSearch=!showAdvSearch' style="cursor:pointer;">
+      <span *ngIf='showAdvSearch'>Simple</span>
+      <span *ngIf='!showAdvSearch'>Advanced</span>
+    </a>
+  </div>
+
+</div>
+<app-products-simple-search *ngIf='!showAdvSearch' (searchResultsReady)='simpleSearchResultsReady($event)' (loadingEvent)='showHideLoader($event)'></app-products-simple-search>
+<app-products-advanced-search *ngIf='showAdvSearch' (searchResultsReady)='advSearchResultsReady($event)' (loadingEvent)='showHideLoader($event)'></app-products-advanced-search>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <app-loading-indicator *ngIf='loading'></app-loading-indicator>
+      <app-products-list *ngIf='!loading' [products]='products'></app-products-list>
+    </div>
+    <div class="col-sm-4">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<!-- display saved searches -->
+<div class='footer navbar-fixed-bottom' style="padding:50px">
+  <app-saved-search-list></app-saved-search-list>
+</div>

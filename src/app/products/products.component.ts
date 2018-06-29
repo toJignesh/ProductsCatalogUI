@@ -1,7 +1,8 @@
+import { SavedSearchService } from './../_services/saved-search.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Product } from '../../models/product';
-import { ProductsService } from '../../_services/products.service';
+import { Product } from '../models/product';
+import { ProductsService } from '../_services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -16,8 +17,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
   searchText: string = '';
   showAdvSearch: boolean=false;
   loading: boolean;
-
+  searchTypeSubscription: Subscription;
   constructor(private productService: ProductsService,
+    private savedSearchService: SavedSearchService,
     private route: ActivatedRoute,
     private router: Router) {
 
@@ -26,6 +28,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.search();
+    // this.searchTypeSubscription = this.savedSearchService.searchTypeObs.subscribe(t=>console.log(`search type=${t}`))
+    this.searchTypeSubscription = this.savedSearchService
+                                      .specificSearchObservable
+                                      .subscribe(a=>console.log('from products component', a));
   }
 
   search(): void {
@@ -45,6 +51,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     if (this.productServiceSubscription) {
       this.productServiceSubscription.unsubscribe();
     }
+
+    this.searchTypeSubscription.unsubscribe();
   }
 
   advSearchResultsReady(value: Product[]){

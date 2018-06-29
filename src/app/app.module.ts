@@ -1,3 +1,5 @@
+import { SavedSearchListComponent } from './products/search/saved-search-list/saved-search-list.component';
+import { SavedSearchItemComponent } from './products/search/saved-search-item/saved-search-item.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -14,10 +16,10 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 
 import { ClickOutsideDirective } from './_directives/click-outside.directive';
-import { ProductsComponent } from './products/products/products.component';
-import { ProductsAdvancedSearchComponent } from './products/products-advanced-search/products-advanced-search.component';
+import { ProductsComponent } from './products/products.component';
+import { ProductsAdvancedSearchComponent } from './products/search/products-advanced-search/products-advanced-search.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
-import { ProductSimpleSearchComponent } from './products/products-simple-search/products-simple-search.component';
+import { ProductSimpleSearchComponent } from './products/search/products-simple-search/products-simple-search.component';
 import { LoadingIndicatorComponent } from './common/loading-indicator/loading-indicator.component';
 
 const routes: Routes=[
@@ -44,7 +46,9 @@ const routes: Routes=[
     ProductsComponent,
     ProductsAdvancedSearchComponent,
     ProductsListComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    SavedSearchItemComponent,
+    SavedSearchListComponent
   ],
   imports: [
     BrowserModule,

@@ -51,7 +51,16 @@
         formControlname='quantity'
         id='quantity'>
     </div>
-    <button class="btn btn-primary">search</button>
+    <div class="container">
+    <div class="row">
+      <div class="col-sm2">
+          <button class="btn btn-primary">search</button>
+      </div>
+      <div class="col-sm2">
+          <a style="cursor:pointer;"><span (click)="saveSearch(searchForm.form)">Save Search</span></a>
+      </div>
+    </div>
+  </div>
   </form>
 
   <div *ngIf='!isValidForm'>
