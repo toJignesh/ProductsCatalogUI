@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { Product } from '../../models/product';
 import { ProductsService } from '../../_services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
@@ -15,6 +14,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   searchTried: boolean = false;
   searchText: string = '';
+  showAdvSearch: boolean=false;
+  loading: boolean;
 
   constructor(private productService: ProductsService,
     private route: ActivatedRoute,
@@ -39,25 +40,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
         e => console.log('error block', e, `${e.status} [${e.statusText}]`));
 
   }
-  searchSubmit(f: NgForm) {
-    this.searchTried = true;
-    console.log(f.value);
-    this.router.navigate(['products'], { queryParams: { search: f.value.searchText } }).then(_ => this.search());
-  }
-
-
-  testProductsService() {
-    this.productServiceSubscription = this.productService.getAll()
-      .subscribe(d => {
-        console.log(d);
-        this.products = d;
-      },
-        e => console.log('error block', e, `${e.status} [${e.statusText}]`));
-  }
-
-  itemSelected(id: number):void{
-    this.router.navigate(['products',id]);
-  }
 
   ngOnDestroy() {
     if (this.productServiceSubscription) {
@@ -65,10 +47,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
   }
 
-  someoneHitEnter(value: string):void{
-    console.log('value has reached the parent component', value);
-    
-    this.router.navigate(['products'], { queryParams: { search: value } }).then(_ => this.search());
+  advSearchResultsReady(value: Product[]){
+    this.products = value;
+  }
+
+  simpleSearchResultsReady(value: Product[]){
+    this.products = value;
+  }
+
+  showHideLoader(value: boolean){
+    this.loading = value;
   }
 }
 

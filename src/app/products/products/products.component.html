@@ -1,45 +1,24 @@
 
-  <app-ac-search (searchPerformed)='someoneHitEnter($event)'></app-ac-search>
-
+  <div class="row">
+    <a (click)='showAdvSearch=!showAdvSearch' style="cursor:pointer;">
+      <span *ngIf='showAdvSearch'>Simple</span>      
+      <span *ngIf='!showAdvSearch'>Advanced</span>      
+    </a>
+  </div>
+  <app-products-simple-search 
+    *ngIf='!showAdvSearch' 
+    (searchResultsReady)='simpleSearchResultsReady($event)'
+    (loadingEvent)='showHideLoader($event)'></app-products-simple-search>
+  <app-products-advanced-search 
+    *ngIf='showAdvSearch' 
+    (searchResultsReady)='advSearchResultsReady($event)'
+    (loadingEvent)='showHideLoader($event)'></app-products-advanced-search>
 
   <div class="container">
     <div class="row">
       <div class="col-sm-8">
-  
-        <div *ngIf='(products.length == 0 && searchTried)'>
-          No products found.
-        </div>
-        <div *ngIf='products.length > 0'>
-          <table class='table table-striped'>
-            <tbody>
-              <tr *ngFor='let product of products' (click)='itemSelected(product.id)'>
-                <td>
-                  {{product.name}}
-                  <br>
-                  {{product.briefDescription}}
-                </td>
-              </tr>
-            </tbody>
-            <!-- <thead>
-              <tr>
-                <th class="scope">Id</th>
-                <th class="scope">Name</th>
-                <th class="scope">Description</th>
-                <th class="scope">Price</th>
-                <th class="scope">Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor='let product of products' (click)='itemSelected(product.id)'>
-                <th>{{product.id}}</th>
-                <th>{{product.name}}</th>
-                <th>{{product.briefDescription}}</th>
-                <th>{{product.price}}</th>
-                <th>{{product.quantity}}</th>
-              </tr>
-            </tbody> -->
-          </table>
-        </div>
+        <app-loading-indicator *ngIf='loading'></app-loading-indicator>
+        <app-products-list *ngIf='!loading' [products]='products'></app-products-list>
       </div>
       <div class="col-sm-4">
         <router-outlet></router-outlet>

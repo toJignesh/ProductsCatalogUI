@@ -12,10 +12,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-import { AcSearchComponent } from './ac-search/ac-search.component';
+
 import { ClickOutsideDirective } from './_directives/click-outside.directive';
 import { ProductsComponent } from './products/products/products.component';
 import { ProductsAdvancedSearchComponent } from './products/products-advanced-search/products-advanced-search.component';
+import { ProductsListComponent } from './products/products-list/products-list.component';
+import { ProductSimpleSearchComponent } from './products/products-simple-search/products-simple-search.component';
+import { LoadingIndicatorComponent } from './common/loading-indicator/loading-indicator.component';
 
 const routes: Routes=[
   {path:'', redirectTo: 'products', canActivate:[AuthGuard], pathMatch:'full'},
@@ -24,7 +27,6 @@ const routes: Routes=[
   {path:'products',component:ProductsComponent, canActivate:[AuthGuard], children:[
     {path:':id', component:ProductDetailComponent},
   ]},
-  {path:'prod-adv-search',component:ProductsAdvancedSearchComponent, canActivate:[AuthGuard]},
   {path:'**', redirectTo:''}
 ];
 
@@ -37,10 +39,12 @@ const routes: Routes=[
     LoginComponent,
     HomeComponent,
     ProductDetailComponent,
-    AcSearchComponent,
+    ProductSimpleSearchComponent,
     ClickOutsideDirective,
     ProductsComponent,
-    ProductsAdvancedSearchComponent
+    ProductsAdvancedSearchComponent,
+    ProductsListComponent,
+    LoadingIndicatorComponent
   ],
   imports: [
     BrowserModule,

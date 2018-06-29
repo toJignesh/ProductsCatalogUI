@@ -66,4 +66,20 @@ export class ProductsService {
       );
   }
 
+  advSearch(name:string,description:string,price:number,quantity:number):Observable<any>{
+    return this.http.get<Product[]>(`/api/products/search?name=${name}&description=${description}&price=${price}&quantity=${quantity}`)
+      .pipe(
+        map(data=>{
+          return data.map( d=>({
+            id: d.productId,
+            name: d.name,
+            briefDescription: d.briefDescription,
+            price: d.price,
+            quantity: d.quantity
+          }))
+        }),
+        catchError(err=> throwError(err))
+      );    
+  }
+
 }

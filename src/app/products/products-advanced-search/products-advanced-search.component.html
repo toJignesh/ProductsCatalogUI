@@ -1,6 +1,6 @@
 <div>
   <form #searchForm="ngForm" (ngSubmit)="searchAdvanced(searchForm)">
-    <div class='form-group'>
+    <!-- <div class='form-group'>
       <label for="id">id</label>
       <br>
       <input type="text" 
@@ -9,7 +9,7 @@
         #id="ngModel"
         ngModel
         >
-    </div>
+    </div> -->
     <div class="form-group">
       <label for="name">name</label>
       <br>
@@ -32,7 +32,7 @@
         id='description'>
     </div>
     <div class="form-group">
-      <label for="price">price</label>
+      <label for="price">price (<)</label>
       <br>
       <input type="text"
         ngModel
@@ -42,7 +42,7 @@
         id='price'>
     </div>
     <div class="form-group">
-      <label for="quantity">quantity</label>
+      <label for="quantity">quantity (>)</label>
       <br>
       <input type="text"
         ngModel
@@ -55,6 +55,6 @@
   </form>
 
   <div *ngIf='!isValidForm'>
-    <div class="alert alert-warning">one field must have value</div>
+    <div class="alert alert-warning">at least one value must be specified</div>
   </div>
 </div>
