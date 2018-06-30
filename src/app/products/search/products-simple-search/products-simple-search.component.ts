@@ -15,7 +15,7 @@ import { SavedSearch } from 'src/app/models/saved-search';
   templateUrl: './products-simple-search.component.html',
   styleUrls: ['./products-simple-search.component.css']
 })
-export class ProductSimpleSearchComponent implements OnInit, OnDestroy {
+export class ProductSimpleSearchComponent implements OnInit, OnDestroy{
   @Output() searchResultsReady: EventEmitter<Array<Product>> = new EventEmitter<Array<Product>>();
   @Output() loadingEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   showDropDown: boolean = false;
@@ -30,14 +30,11 @@ export class ProductSimpleSearchComponent implements OnInit, OnDestroy {
     private savedSearchService: SavedSearchService) {
 
       this.loadSearchFromObsSubscription = this.savedSearchService
-      .specificSearchObservable
-      .pipe(
-        filter(ss=> ss.searchType === 'simple')
-      )
-      .subscribe(a=>{
-        console.log('from simple-search component', a);
-        this.searchForm.setValue(a.criteria);
-    });
+      .searchCriteriaDefault
+      .subscribe(data=>{ console.log('will load simple search', data); 
+      this.searchForm.setValue(data)
+    }
+    );
      }
 
   ngOnInit() {
@@ -63,11 +60,12 @@ export class ProductSimpleSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.acSubscription.unsubscribe();
+    console.log('destroying simple search');
+
     try {
+      this.loadSearchFromObsSubscription.unsubscribe();
       this.acSubscription.unsubscribe();
       this.productServiceSubscription.unsubscribe();
-      this.loadSearchFromObsSubscription.unsubscribe();
     } catch (err) {
       
     }

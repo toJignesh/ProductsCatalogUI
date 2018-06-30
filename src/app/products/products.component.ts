@@ -29,8 +29,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.search();
     this.searchTypeSubscription = this.savedSearchService
-                                  .searchTypeObs
-                                  .subscribe(t=> this.showAdvSearch = t === 'advanced');
+                                  .specificSearchObservable
+                                  .subscribe(ss=> 
+                                    {
+                                      this.showAdvSearch = (ss.searchType === 'advanced');
+                                      setTimeout(()=>
+                                        this.savedSearchService.setSearchCriteriaDefaults(ss.criteria), 
+                                      0); // THIS IS VERY STRANGE BUT LEAVE IT HERE
+                                    });
   }
 
   search(): void {
@@ -68,7 +74,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   switchSearchForm(){
     this.showAdvSearch = !this.showAdvSearch;
-    delete this.products;
+    delete this.products; // clear the array when 
   }
+
 }
 

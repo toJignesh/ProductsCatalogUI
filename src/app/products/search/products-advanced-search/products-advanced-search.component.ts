@@ -1,6 +1,6 @@
 
 import { ProductsService } from './../../../_services/products.service';
-import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Product } from '../../../models/product';
 import { delay, filter, tap } from 'rxjs/operators';
@@ -14,33 +14,33 @@ import { SavedSearchService } from './../../../_services/saved-search.service';
   templateUrl: './products-advanced-search.component.html',
   styleUrls: ['./products-advanced-search.component.css']
 })
-export class ProductsAdvancedSearchComponent implements OnInit, OnDestroy {
+export class ProductsAdvancedSearchComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('searchForm') searchForm: NgForm;
   @Output() searchResultsReady: EventEmitter<Array<Product>> = new EventEmitter<Array<Product>>();
   @Output() loadingEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   isValidForm: boolean = true;
   products: Array<Product>;
-  loadSearchFromObsSubscription: Subscription;
+  searchCriteriaDefaultSubscription: Subscription;
 
   constructor(private productsService: ProductsService,
     private savedSearchService: SavedSearchService) {
-      this.loadSearchFromObsSubscription = this.savedSearchService
-                  .specificSearchObservable
-                  .pipe(
-                    filter(ss=> ss.searchType === 'advanced')
-                  )
-                  .subscribe(a=>{
-                    console.log('from adv-search component', a);
-                    this.searchForm.form.setValue(a.criteria);
-                });
+
   }
     
   ngOnInit() {
   }
 
+  ngAfterViewInit(){
+    this.searchCriteriaDefaultSubscription = this.savedSearchService
+    .searchCriteriaDefault
+    .subscribe(data=>{ console.log('will load adv search', data);
+     this.searchForm.form.setValue(data)
+  });
+  }
   ngOnDestroy(){
-    this.loadSearchFromObsSubscription.unsubscribe();
+    console.log('destroying advanced search');
+    this.searchCriteriaDefaultSubscription.unsubscribe();
   }
   searchAdvanced(form: NgForm) {
     this.isValidForm = true;

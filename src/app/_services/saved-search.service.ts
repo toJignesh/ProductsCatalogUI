@@ -9,15 +9,17 @@ import { SavedSearch } from '../models/saved-search';
 export class SavedSearchService {
   private savedSearches:BehaviorSubject<SavedSearch[]>;
   private specificSearch: Subject<SavedSearch> = new Subject<SavedSearch>();
-  private searchTypeSub: Subject<string>=new Subject<string>();
+  
+  searchCriteriaDefault: Subject<any> = new Subject<any>();
 
-  searchTypeObs: Observable<string> = this.searchTypeSub.asObservable();
+  
   savedSearchesObservable:Observable<SavedSearch[]>;
   specificSearchObservable: Observable<SavedSearch> = this.specificSearch.asObservable();
 
   constructor() {
     this.savedSearches=new BehaviorSubject<SavedSearch[]>(this.getCurrentSavedList());
     this.savedSearchesObservable = this.savedSearches.asObservable();
+    
   }
 
   saveSearch(ss: SavedSearch):void{
@@ -33,11 +35,14 @@ export class SavedSearchService {
     var savedSearch: SavedSearch;
     if(results.length >= ind){
       savedSearch = results[ind];
-      this.searchTypeSub.next(savedSearch.searchType);
       this.specificSearch.next(savedSearch);
     }
-    
   }
+
+  setSearchCriteriaDefaults(criteria: any){
+    this.searchCriteriaDefault.next(criteria);
+  }
+
   getAllSearches():SavedSearch[]{
     let results: SavedSearch[]=[];
     let allSearches = localStorage.getItem('my-searches');
