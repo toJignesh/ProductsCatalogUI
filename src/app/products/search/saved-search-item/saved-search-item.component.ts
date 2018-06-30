@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-saved-search-item',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./saved-search-item.component.css']
 })
 export class SavedSearchItemComponent implements OnInit {
-
+  @Input() itemIndex:number;
+  @Input() displayText: string;
   constructor() { }
 
   ngOnInit() {
   }
 
+  loadSearch(){}
 }

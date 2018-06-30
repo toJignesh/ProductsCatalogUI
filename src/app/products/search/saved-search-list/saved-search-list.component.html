@@ -3,6 +3,8 @@
 <ul class="nav nav-pills">
   <li *ngFor="let ss of searches; let i = index;">
     <a style="cursor:pointer;"><span (click)="loadSearch(i)">{{i}} -- {{ss.name}}</span></a>
+    
+    <img src="../../../../assets/delete.png" alt="remove" (click)='removeSearch(i)' style="width:16px;height:16px">
   </li>
 </ul>
 </div>

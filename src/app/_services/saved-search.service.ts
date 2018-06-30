@@ -43,6 +43,14 @@ export class SavedSearchService {
     this.searchCriteriaDefault.next(criteria);
   }
 
+  removeSearch(ind: number):void{
+    let results: SavedSearch[]=this.getCurrentSavedList();
+    //if(results.length === 10){results = results.slice(1);}
+    results.splice(ind, 1);
+    localStorage.setItem('my-searches', JSON.stringify(results));
+    this.savedSearches.next(results);
+  }
+
   getAllSearches():SavedSearch[]{
     let results: SavedSearch[]=[];
     let allSearches = localStorage.getItem('my-searches');

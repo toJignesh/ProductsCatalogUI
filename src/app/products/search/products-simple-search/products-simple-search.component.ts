@@ -32,7 +32,8 @@ export class ProductSimpleSearchComponent implements OnInit, OnDestroy{
       this.loadSearchFromObsSubscription = this.savedSearchService
       .searchCriteriaDefault
       .subscribe(data=>{ console.log('will load simple search', data); 
-      this.searchForm.setValue(data)
+      this.searchForm.setValue(data);
+      this.enterPressed(this.searchForm);
     }
     );
      }

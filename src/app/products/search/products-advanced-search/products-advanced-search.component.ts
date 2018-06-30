@@ -35,7 +35,8 @@ export class ProductsAdvancedSearchComponent implements OnInit, OnDestroy, After
     this.searchCriteriaDefaultSubscription = this.savedSearchService
     .searchCriteriaDefault
     .subscribe(data=>{ console.log('will load adv search', data);
-     this.searchForm.form.setValue(data)
+     this.searchForm.form.setValue(data);
+     this.searchAdvanced(this.searchForm);
   });
   }
   ngOnDestroy(){

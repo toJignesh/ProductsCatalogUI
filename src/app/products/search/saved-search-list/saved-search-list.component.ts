@@ -14,18 +14,16 @@ export class SavedSearchListComponent implements OnInit {
   ngOnInit() {
     
     this.savedSearchService.savedSearchesObservable.subscribe(d=>{
-      console.log('from here',d)
       this.searches = d;
     });
   }
 
-  saveSearch(){
-    console.log('event fired');
-    this.savedSearchService.saveSearch(Object.assign({type:'test',criteria:{ a:'b',c:'d',e:'f'}}));
+  loadSearch(ind:number):void{
+    this.savedSearchService.loadSearch(ind);
   }
 
-  loadSearch(ind:number):void{
-    console.log('loading search# ' + ind);
-    this.savedSearchService.loadSearch(ind);
+  removeSearch(ind:number):void{
+    console.log('remove #', ind);
+    this.savedSearchService.removeSearch(ind);
   }
 }
