@@ -8,7 +8,7 @@ import { Product } from '../../models/product';
   styleUrls: ['./products-list.component.css']
 })
 export class ProductsListComponent implements OnInit {
-  @Input() products: Array<Product>=[];
+  @Input() products: Array<Product>;
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {

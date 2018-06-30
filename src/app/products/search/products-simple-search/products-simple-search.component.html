@@ -2,14 +2,17 @@
   <div class="row">
     <div class="col-sm-4">
       <form [formGroup]='searchForm'>
-      <input value="my value" autocomplete="off"
-      formControlName='search' 
-      name='search' 
-      class='form-control input-underline search-bar' 
-      type="text"
-      #search
-      (keyup.enter)='enterPressed(searchForm)'>
-    </form>
+        <input value="my value" autocomplete="off"
+            formControlName='search' 
+            name='search' 
+            class='form-control input-underline search-bar' 
+            type="text"
+            #search
+            (keyup.enter)='enterPressed(searchForm)'>
+      </form>
+    </div>
+    <div class="col-sm2">
+      <a style="cursor:pointer;"><span (click)="saveSearch(searchForm.form)">Save Search</span></a>
     </div>
     <div clickOutside  (clickOutside)="toggleDropdown()" *ngIf='showDropDown'>
       <div class='col-sm-1 dropdown-menu product-drop-down'>

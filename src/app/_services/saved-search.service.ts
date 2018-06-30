@@ -33,8 +33,8 @@ export class SavedSearchService {
     var savedSearch: SavedSearch;
     if(results.length >= ind){
       savedSearch = results[ind];
+      this.searchTypeSub.next(savedSearch.searchType);
       this.specificSearch.next(savedSearch);
-      // this.searchTypeSub.next(savedSearch.searchType);
     }
     
   }

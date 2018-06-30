@@ -1,8 +1,8 @@
 <div>
-  <div *ngIf='(products.length == 0 && searchTried)'>
+  <div *ngIf='(products?.length == 0)'>
     No products found.
   </div>
-  <div *ngIf='products.length > 0'>
+  <div *ngIf='products?.length > 0'>
     <table class='table table-striped'>
       <tbody>
         <tr *ngFor='let product of products' (click)='itemSelected(product.id)'>

@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   productServiceSubscription: Subscription;
-  products: Product[] = [];
+  products: Product[];
   searchTried: boolean = false;
   searchText: string = '';
   showAdvSearch: boolean=false;
@@ -28,10 +28,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.search();
-    // this.searchTypeSubscription = this.savedSearchService.searchTypeObs.subscribe(t=>console.log(`search type=${t}`))
     this.searchTypeSubscription = this.savedSearchService
-                                      .specificSearchObservable
-                                      .subscribe(a=>console.log('from products component', a));
+                                  .searchTypeObs
+                                  .subscribe(t=> this.showAdvSearch = t === 'advanced');
   }
 
   search(): void {
@@ -65,6 +64,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   showHideLoader(value: boolean){
     this.loading = value;
+  }
+
+  switchSearchForm(){
+    this.showAdvSearch = !this.showAdvSearch;
+    delete this.products;
   }
 }
 

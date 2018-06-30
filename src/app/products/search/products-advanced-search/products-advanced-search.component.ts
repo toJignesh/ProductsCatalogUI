@@ -1,6 +1,6 @@
 
 import { ProductsService } from './../../../_services/products.service';
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Product } from '../../../models/product';
 import { delay, filter, tap } from 'rxjs/operators';
@@ -15,22 +15,25 @@ import { SavedSearchService } from './../../../_services/saved-search.service';
   styleUrls: ['./products-advanced-search.component.css']
 })
 export class ProductsAdvancedSearchComponent implements OnInit, OnDestroy {
+  @ViewChild('searchForm') searchForm: NgForm;
   @Output() searchResultsReady: EventEmitter<Array<Product>> = new EventEmitter<Array<Product>>();
   @Output() loadingEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
-  advSearchForm: FormGroup;
+
   isValidForm: boolean = true;
-  products: Array<Product> = [];
+  products: Array<Product>;
   loadSearchFromObsSubscription: Subscription;
+
   constructor(private productsService: ProductsService,
     private savedSearchService: SavedSearchService) {
-
-      
       this.loadSearchFromObsSubscription = this.savedSearchService
-      .specificSearchObservable
-      .pipe(
-        filter(ss=> ss.searchType === 'advanced')
-      )
-      .subscribe(a=>console.log('from adv-search component', a));
+                  .specificSearchObservable
+                  .pipe(
+                    filter(ss=> ss.searchType === 'advanced')
+                  )
+                  .subscribe(a=>{
+                    console.log('from adv-search component', a);
+                    this.searchForm.form.setValue(a.criteria);
+                });
   }
     
   ngOnInit() {

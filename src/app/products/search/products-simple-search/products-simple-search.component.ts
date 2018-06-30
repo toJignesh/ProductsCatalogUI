@@ -1,3 +1,4 @@
+
 import { Component, OnInit, Directive, AfterViewInit, ViewChild, ElementRef, OnChanges, OnDestroy, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, switchMap, distinctUntilChanged, filter, delay } from 'rxjs/operators';
@@ -6,6 +7,8 @@ import { Router } from '@angular/router';
 import { EventEmitter } from '@angular/core';
 import { ProductsService } from '../../../_services/products.service';
 import { Product } from '../../../models/product';
+import { SavedSearchService } from 'src/app/_services/saved-search.service';
+import { SavedSearch } from 'src/app/models/saved-search';
 
 @Component({
   selector: 'app-products-simple-search',
@@ -20,9 +23,22 @@ export class ProductSimpleSearchComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   acSubscription: Subscription;
   productServiceSubscription: Subscription;
+  loadSearchFromObsSubscription: Subscription;
 
   constructor(private productService: ProductsService,
-    private router: Router) { }
+    private router: Router,
+    private savedSearchService: SavedSearchService) {
+
+      this.loadSearchFromObsSubscription = this.savedSearchService
+      .specificSearchObservable
+      .pipe(
+        filter(ss=> ss.searchType === 'simple')
+      )
+      .subscribe(a=>{
+        console.log('from simple-search component', a);
+        this.searchForm.setValue(a.criteria);
+    });
+     }
 
   ngOnInit() {
     this.searchForm = new FormGroup(
@@ -48,6 +64,13 @@ export class ProductSimpleSearchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.acSubscription.unsubscribe();
+    try {
+      this.acSubscription.unsubscribe();
+      this.productServiceSubscription.unsubscribe();
+      this.loadSearchFromObsSubscription.unsubscribe();
+    } catch (err) {
+      
+    }
   }
   toggleDropdown() {
     this.showDropDown = !this.showDropDown;
@@ -82,5 +105,13 @@ export class ProductSimpleSearchComponent implements OnInit, OnDestroy {
         },
         e => console.log('error block', e, `${e.status} [${e.statusText}]`));
 
+  }
+
+  saveSearch(): void {
+    let searchName: string = `simple: ${this.searchForm.value.search}`;
+
+    var ss: SavedSearch = Object.assign({ name: searchName, searchType: 'simple', criteria: this.searchForm.value });
+    console.log(ss);
+    this.savedSearchService.saveSearch(ss);
   }
 }
