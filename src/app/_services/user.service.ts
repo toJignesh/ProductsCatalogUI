@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { User } from './../models/User';
 import { Injectable } from '@angular/core';
 
@@ -6,7 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   isLoggedIn(){
     if(localStorage.getItem('currentUser')){
@@ -25,4 +27,15 @@ export class UserService {
     }
     return null;
   }
+
+  getUserProfileFromDb():Observable<any>{
+    return this.http.get('/api/user');
+  }
+
+  saveProductSearches(searches: string):void{
+    this.http.patch('/api/user/save-product-searches',{'savedSearches': searches})
+    .subscribe();
+  }
+
+  
 }

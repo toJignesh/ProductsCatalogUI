@@ -13,7 +13,7 @@ export class SavedSearchListComponent implements OnInit {
 
   ngOnInit() {
     
-    this.savedSearchService.savedSearchesObservable.subscribe(d=>{
+    this.savedSearchService.savedSearches.subscribe(d=>{
       this.searches = d;
     });
   }

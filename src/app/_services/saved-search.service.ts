@@ -2,23 +2,25 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { SavedSearch } from '../models/saved-search';
+import { UserService } from './user.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SavedSearchService {
-  private savedSearches:BehaviorSubject<SavedSearch[]>;
+  savedSearches:BehaviorSubject<SavedSearch[]>;
   private specificSearch: Subject<SavedSearch> = new Subject<SavedSearch>();
   
   searchCriteriaDefault: Subject<any> = new Subject<any>();
 
   
-  savedSearchesObservable:Observable<SavedSearch[]>;
+  ////savedSearchesObservable:Observable<SavedSearch[]>;
   specificSearchObservable: Observable<SavedSearch> = this.specificSearch.asObservable();
 
-  constructor() {
+  constructor(private userService: UserService) {
     this.savedSearches=new BehaviorSubject<SavedSearch[]>(this.getCurrentSavedList());
-    this.savedSearchesObservable = this.savedSearches.asObservable();
+    //this.savedSearchesObservable = this.savedSearches.asObservable();
     
   }
 
@@ -26,7 +28,12 @@ export class SavedSearchService {
     let results: SavedSearch[]=this.getCurrentSavedList();
     if(results.length === 10){results = results.slice(1);}
     results.push(ss);
-    localStorage.setItem('my-searches', JSON.stringify(results));
+
+    let searchesString: string = JSON.stringify(results);
+
+    localStorage.setItem('my-searches', searchesString);
+    this.userService.saveProductSearches(searchesString);
+
     this.savedSearches.next(results);
   }
 
@@ -47,7 +54,10 @@ export class SavedSearchService {
     let results: SavedSearch[]=this.getCurrentSavedList();
     //if(results.length === 10){results = results.slice(1);}
     results.splice(ind, 1);
-    localStorage.setItem('my-searches', JSON.stringify(results));
+    let searchesString: string = JSON.stringify(results);
+
+    localStorage.setItem('my-searches', searchesString);
+    this.userService.saveProductSearches(searchesString);
     this.savedSearches.next(results);
   }
 
