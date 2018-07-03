@@ -22,5 +22,8 @@
     <br><br>
     <button class="btn btn-primary" [disabled]='loginForm.invalid'>Login</button>
   </form>
-  <div *ngIf="showLoginError" class="alert alert-danger">Username or password is incorrect.</div>
+  <div>
+    <app-loading-indicator *ngIf="loading"></app-loading-indicator>
+    <div *ngIf="showLoginError" class="alert alert-danger">Username or password is incorrect.</div>
+  </div>
 </div>

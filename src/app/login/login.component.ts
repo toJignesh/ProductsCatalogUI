@@ -15,6 +15,7 @@ import { map } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
 private returnUrl:string;
 private showLoginError: boolean=false;
+loading: boolean=false;
 
   constructor(private authService: AuthenticationService,
               private router:Router,
@@ -28,6 +29,8 @@ private showLoginError: boolean=false;
   }
 
   loginSubmit(f: NgForm){
+    this.loading = true;
+
     this.authService.login(f.value.username, f.value.password)
       .subscribe(
         (loggedInUser: User)=>{
@@ -48,6 +51,7 @@ private showLoginError: boolean=false;
         error=>{
           console.log('username or password is not correct');
           this.showLoginError=true;
+          this.loading =false;
         }
       )
   }
